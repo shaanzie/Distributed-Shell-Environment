@@ -117,7 +117,7 @@ int distribute(char* args, char* params)
         return -1; 
     } 
     
-    send(sock , args , params , 0); 
+    send(sock , args , 1024 , 0); 
     printf("Message sent\n"); 
     valread = read( sock , buffer, 1024); 
     printf("%s\n",buffer ); 
