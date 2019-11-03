@@ -18,6 +18,7 @@
 int lsh_cd(char **args);
 int lsh_help(char **args);
 int lsh_exit(char **args);
+int lsh_ls(char **args);
 
 /*
   List of builtin commands, followed by their corresponding functions.
@@ -25,12 +26,14 @@ int lsh_exit(char **args);
 char *builtin_str[] = {
   "cd",
   "help",
+  "ls",
   "exit"
 };
 
 int (*builtin_func[]) (char **) = {
   &lsh_cd,
   &lsh_help,
+  &lsh_ls,
   &lsh_exit
 };
 
@@ -87,6 +90,12 @@ int lsh_help(char **args)
 int lsh_exit(char **args)
 {
   return 0;
+}
+
+int lsh_ls(char **args)
+{
+  system("ls");
+  return 1;
 }
 
 int distribute(char* args, char* params)
