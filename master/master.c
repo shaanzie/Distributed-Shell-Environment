@@ -58,6 +58,8 @@ int main(int argc, char const *argv[])
             exit(EXIT_FAILURE); 
         } 
         valread = read( new_socket , buffer, 1024); 
+
+        printf("%s", buffer);
         
         FILE *fp;
         char path[1035];

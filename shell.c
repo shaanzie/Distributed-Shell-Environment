@@ -98,7 +98,7 @@ int lsh_ls(char **args)
   return 1;
 }
 
-int distribute(char* args, char* params)
+int distribute(char** args)
 {
     int sock = 0, valread; 
     struct sockaddr_in serv_addr; 
@@ -148,7 +148,7 @@ int lsh_launch(char **args)
     // Child process
     // if (execvp(args[0], args) == -1) {
     //   perror("lsh");
-    if(distribute(args[0], args) == -1) {
+    if(distribute(args) == -1) {
         perror("lsh error");
     }
     exit(EXIT_FAILURE);
