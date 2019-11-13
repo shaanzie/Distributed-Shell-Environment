@@ -124,9 +124,28 @@ int distribute(char** args)
     { 
         printf("\nConnection Failed \n"); 
         return -1; 
-    } 
+    }
     
-    send(sock , args , 1024 , 0); 
+    FILE* fp = fopen("inp.txt", 'w');
+    if(fp == NULL)
+    {
+      printf("ERROR");
+      exit(0);
+    }
+    for(char* arg = *args; arg; arg = *++args)
+    {
+      fprintf(fp, "%s", arg);
+    }
+    fclose(fp);
+
+    fp = fopen("inp.txt", 'r');
+
+    char* new;
+    fscanf(fp,"%[^\n]", new);
+
+    printf("%s\n", new);
+    
+    send(sock , new , 1024 , 0); 
     printf("Message sent\n"); 
     valread = read( sock , buffer, 1024); 
     printf("%s\n",buffer ); 
