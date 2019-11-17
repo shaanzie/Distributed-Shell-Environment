@@ -60,27 +60,23 @@ int main(int argc, char const *argv[])
         valread = read( new_socket , buffer, 1024); 
 
         printf("%s", buffer);
-        
-        FILE *fp;
-        char path[1035];
+        system(buffer);
+        system("./a.out >> out.txt");
 
-        /* Open the command for reading. */
-        fp = popen(buffer, "r");
-        if (fp == NULL) {
-            printf("Failed to run command\n" );
+        FILE *fp = fopen("out.txt", "r");
+        char* path;
+        if(fp == NULL)
             exit(1);
+        else
+        {
+            fscanf(fp, "%[^\n]", path);
+            send(new_socket, path, strlen(path), 0);
         }
-
-        /* Read the output a line at a time - output it. */
-        while (fgets(path, sizeof(path), fp) != NULL) {
-            
-            send(new_socket , path , strlen(path) , 0 ); 
-        }
-
         /* close */
-        pclose(fp);
+        fclose(fp);
          
         printf("\n");
+
         close(new_socket);
         
     }

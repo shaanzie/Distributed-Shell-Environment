@@ -1,7 +1,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <unistd.h> 
 #include <stdio.h> 
@@ -125,29 +124,16 @@ int distribute(char** args)
         printf("\nConnection Failed \n"); 
         return -1; 
     }
-    
-    FILE* fp = fopen("inp.txt", 'w');
-    if(fp == NULL)
-    {
-      printf("ERROR");
-      exit(0);
-    }
+
+    char final[1024] = {};
     for(char* arg = *args; arg; arg = *++args)
     {
-      fprintf(fp, "%s", arg);
+      strcat(final, arg);
+      strcat(final, " ");
     }
-    fclose(fp);
-
-    fp = fopen("inp.txt", 'r');
-
-    char* new;
-    fscanf(fp,"%[^\n]", new);
-
-    printf("%s\n", new);
-    
-    send(sock , new , 1024 , 0); 
+    send(sock , final , 1024 , 0); 
     printf("Message sent\n"); 
-    valread = read( sock , buffer, 1024); 
+    valread = read( sock , buffer, sizeof(buffer)); 
     printf("%s\n",buffer ); 
     return 0;
 }
